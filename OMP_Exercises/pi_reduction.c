@@ -73,7 +73,8 @@ void main() {
 
         pi = step * sum;
         run_time = omp_get_wtime() - start_time;
-        printf("\n pi with %i num threads is %lf in %lf seconds\n ", i_num_threads, pi, run_time);
+        // printf("\n pi with %i num threads is %lf in %lf seconds\n ", i_num_threads, pi, run_time);
+        printf("\n %i, %lf, %lf ", i_num_threads, pi, run_time);
     }
 }
 
