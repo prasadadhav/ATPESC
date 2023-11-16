@@ -1,7 +1,7 @@
 // this is the solutons for the pi.c
 
 // Compile with OpenMP 
-// gcc -fopenmp pi_sol.c -o pi_sol
+// gcc -fopenmp pi_reduction.c -o pi_reduction
 //
 // execute the program after compile
 // ./pi_sol
@@ -21,10 +21,12 @@ void main() {
 
     step = 1.0 / (double)num_steps;
 
-    int max_threads_to_loop = 8;
+    int max_threads_to_loop = 128;
 
     for (int i_num_threads = 1; i_num_threads <= max_threads_to_loop; i_num_threads ++)
     {
+        int max_threads = omp_get_max_threads();
+
         start_time = 0;
         start_time = omp_get_wtime();
 
@@ -49,6 +51,14 @@ void main() {
         // across all threads and store the result in a single variable.
         // In this case, sum is a reduction variable, and +: specifies 
         // that the reduction operation is summation.
+
+        // possible reduction operators
+        // + (initial 0)
+        // * (initial 1)
+        // - (initial 0)
+        // min (largest positive num)
+        // max (most negative num)
+        // C/C++ only &, |, ^, &&, ||
 
         #pragma omp parallel private(i, x) reduction(+:sum)
         {
